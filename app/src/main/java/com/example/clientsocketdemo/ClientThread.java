@@ -63,7 +63,6 @@ public class ClientThread implements Runnable {
                             message.what = 0x123;
                             message.obj = data;
                             handler.sendMessage(message);
-
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -78,13 +77,11 @@ public class ClientThread implements Runnable {
                 public void handleMessage(Message msg) {
                     if(msg.what == 0x345){
                         try {
-                            Log.d("client",msg.obj.toString());
+                           //将获取的信息发送给服务器
                             writer.write(msg.obj.toString().getBytes());
-
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-
                     }
                 }
             };

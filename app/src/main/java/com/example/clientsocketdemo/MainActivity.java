@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //初始化view
         initView();
+        //主线程handler 将获取到的服务器的信息展示在textview上
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -44,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+        //创建客服端子线程并开启子线程
         final ClientThread c = new ClientThread(handler);
         new Thread(c).start();
+        //注册id
         regis_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        //发送消息 必须指定接收方的id
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         unConnect_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -17,8 +17,10 @@ public class MyServer {
         ServerSocket serverSocket = new ServerSocket(port);
         while (true){
             System.out.println("服务器已启动,等待客户端的链接。。。");
+            //阻塞方法 等待客户端的连接
             Socket socket = serverSocket.accept();
             System.out.println("客服端已经链接。。。");
+            //给每个连接的客户端建立子线程
             new Thread(new ServerThread(socket)).start();
 
 

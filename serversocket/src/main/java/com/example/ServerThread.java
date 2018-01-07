@@ -21,8 +21,8 @@ public class ServerThread implements Runnable {
 
     //socket所对应的输入流
     InputStream br = null;
-    private OutputStream outputStream;
     //目标socket所对应的输出流
+    OutputStream outputStream = null;
 
 
     public ServerThread(Socket clientSocket) {
@@ -47,14 +47,16 @@ public class ServerThread implements Runnable {
             while ((len = inputStream.read(buffer)) != -1) {
                 String data = new String(buffer, 0, len);
                 System.out.println(data);
-                //先认证客户端
+                //判断是否是注册id 并将id 和socket存入Map
                 if (data.startsWith("#")) {
                     MyServer.socketMap.put(data, clientSocket);
                 } else {
                     //将数据发送给指定的客户端
                     String[] split = data.split("#");
                     System.out.println("#" + split[0]);
+                    //根据id获取指定的socket
                     Socket c = MyServer.socketMap.get("#" + split[0]);
+                    //获取socket的输出流 并将消息写入
                     outputStream = c.getOutputStream();
                     outputStream.write(split[1].getBytes());
                 }
